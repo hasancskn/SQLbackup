@@ -11,6 +11,7 @@ class JobBase(BaseModel):
     password: str
     db_name: str
     schedule: str = "manual"
+    is_active: int = 1
 
 class JobCreate(JobBase):
     pass
@@ -24,6 +25,9 @@ class Job(JobBase):
 class BackupBase(BaseModel):
     job_id: int
     status: str
+    file_path: str | None = None
+    error_message: str | None = None
+    success: int = 1
 
 class Backup(BackupBase):
     id: int

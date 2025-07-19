@@ -16,6 +16,7 @@ class Job(Base):
     schedule = Column(String, default="manual")
     created_at = Column(DateTime, default=datetime.utcnow)
     backups = relationship("Backup", back_populates="job", cascade="all, delete-orphan")
+    is_active = Column(Integer, default=1)  # 1: aktif, 0: pasif
 
 class Backup(Base):
     __tablename__ = "backups"
@@ -23,4 +24,7 @@ class Backup(Base):
     job_id = Column(Integer, ForeignKey("jobs.id"))
     status = Column(String)
     created_at = Column(DateTime, default=datetime.utcnow)
+    file_path = Column(String, nullable=True)
+    error_message = Column(String, nullable=True)
+    success = Column(Integer, default=1)  # 1: başarılı, 0: hata
     job = relationship("Job", back_populates="backups") 
